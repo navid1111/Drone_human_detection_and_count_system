@@ -7,20 +7,42 @@ import yaml
 from src.config import get_settings
 
 
+def _resolve_base_dir(yaml_dir: str, data: dict) -> str:
+    base = data.get("path")
+    if not base:
+        return yaml_dir
+    if os.path.isabs(base):
+        return base
+    return os.path.normpath(os.path.join(yaml_dir, base))
+
+
+def _resolve_split_path(base_dir: str, yaml_dir: str, split_value: str) -> str:
+    if os.path.isabs(split_value):
+        return split_value
+
+    candidate = os.path.normpath(os.path.join(base_dir, split_value))
+    if os.path.exists(candidate):
+        return candidate
+
+    fallback = os.path.normpath(os.path.join(yaml_dir, split_value))
+    if os.path.exists(fallback):
+        return fallback
+
+    return candidate
 def analyze_dataset(data_yaml_path):
     """Analyze class distribution and imbalance in dataset splits."""
     with open(data_yaml_path) as f:
         data = yaml.safe_load(f)
 
     yaml_dir = os.path.dirname(os.path.abspath(data_yaml_path))
+    base_dir = _resolve_base_dir(yaml_dir, data)
     results = {}
 
     for split in ['train', 'val', 'test']:
         if split not in data:
             continue
 
-        image_path = data[split]
-        image_path = os.path.normpath(os.path.join(yaml_dir, image_path))
+        image_path = _resolve_split_path(base_dir, yaml_dir, data[split])
         label_path = image_path.replace("images", "labels")
 
         class_counts = Counter()
