@@ -62,4 +62,9 @@ logs/
 *.temp
 .env
 !.env.example
-dataset/dataset
+dataset/
+/dataset
+
+# Spec Kit
+.specify/
+.github
