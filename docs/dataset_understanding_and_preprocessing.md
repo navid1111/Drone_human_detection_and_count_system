@@ -55,7 +55,7 @@ After remapping to person/car, the severe class imbalance drops from ~45-56x to 
 
 ## Size distribution
 
-![Size distribution](/home/navid-kamal/IdeaProjects/ants_project/Drone_human_detection_and_count_system/docs/size_distribution_train.png)
+![Size distribution](size_distribution_train.png)
 
 ## Configuration files
 
