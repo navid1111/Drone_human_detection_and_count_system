@@ -1,0 +1,4 @@
+[core]
+    remote = local-store
+['remote "local-store"']
+    url = D:/game/dvc-storage

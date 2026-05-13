@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retail-object-detection"
+version = "1.0.0"
+description = "YOLO-based retail object detection pipeline with stratified data splitting and share-of-shelf analytics"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Team", email = "team@example.com"}
+]
+
+dependencies = [
+    "ultralytics>=8.0.0",
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "wandb>=0.14.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "matplotlib>=3.7.0",
+    "numpy>=1.24.0",
+    "apache-airflow>=2.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "flake8>=6.0",
+    "mypy>=1.0",
+    "ipython>=8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/example/retail-object-detection"
+Documentation = "https://github.com/example/retail-object-detection#readme"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
