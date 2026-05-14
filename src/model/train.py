@@ -62,7 +62,7 @@ def run_training(
     """Train YOLO and return the path to the best checkpoint."""
 
     runtime = get_settings().runtime
-    data_yaml = data_yaml or runtime.stratified_yaml
+    data_yaml = data_yaml or runtime.dataset_yaml
     model_base = model_base or runtime.model_base
     project = project or runtime.train_project
     name = name or runtime.train_name
@@ -167,7 +167,7 @@ def run_training(
             # Log W&B Artifact with reference to DVC-tracked dataset
             # This creates a professional link: W&B tracks versioning, DVC manages files
             try:
-                artifact = wandb.Artifact(f'retail-dataset-v{runtime.dataset_version}', type='dataset')
+                artifact = wandb.Artifact(f'visdrone-dataset-v{runtime.dataset_version}', type='dataset')
                 dataset_path = os.path.join(runtime.project_root, "dataset")
                 artifact.add_reference(f'file://{os.path.abspath(dataset_path)}')
                 run.log_artifact(artifact)
