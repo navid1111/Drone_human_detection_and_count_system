@@ -1,6 +1,6 @@
 # 2-class dataset config for remapped VisDrone labels
 # Uses repo-relative paths; resolved via APP_PROJECT_ROOT.
-path: ../dataset/dataset_drone/VisDrone_2class
+path: dataset/VisDrone_2class 
 train: VisDrone2019-DET-train/images
 val: VisDrone2019-DET-val/images
 test: VisDrone2019-DET-test-dev/images

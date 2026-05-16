@@ -1,4 +1,4 @@
-import os
+pyimport os
 import sys
 import yaml
 from pathlib import Path
@@ -140,12 +140,49 @@ def run_training(
     # Log to W&B only if the run was successfully initialized
     if run is not None:
         try:
-            # Log final metrics to summary
+            # Generate and log a comprehensive markdown summary
+            import io
+            from contextlib import redirect_stdout
+            f = io.StringIO()
+            with redirect_stdout(f):
+                model.info(detailed=True)
+            model_summary = f.getvalue()
+            
+            summary_md = f"""
+            # Training Summary
+            
+            ## Configuration
+            - **Dataset Version:** {runtime.dataset_version}
+            - **Epochs:** {epochs}
+            - **Batch Size:** {batch}
+            - **Image Size:** {imgsz}
+            
+            ## Best Metrics
+            - **Precision:** {results.results_dict.get('metrics/precision(B)', 0):.4f}
+            - **Recall:** {results.results_dict.get('metrics/recall(B)', 0):.4f}
+            - **mAP50:** {results.results_dict.get('metrics/mAP50(B)', 0):.4f}
+            - **mAP50-95:** {results.results_dict.get('metrics/mAP50-95(B)', 0):.4f}
+            - **Fitness:** {getattr(results, 'best_fitness', 0):.4f}
+            
+            ## Model Architecture
+            ```text
+            {model_summary}
+            ```
+            """
+            # Replace newlines with <br> for better wandb HTML rendering if needed,
+            # but wandb.Html supports basic HTML. We can use a markdown renderer or just plain pre text.
+            # Actually wandb.Html handles markdown if we pass it directly sometimes, or we can just use wandb.Table.
+            # To be safe, we will just use HTML directly.
+            import markdown
+            html_summary = markdown.markdown(summary_md)
+            run.log({"Training Summary": wandb.Html(html_summary)})
+
+            # Log final metrics to run summary (scalars)
             run.summary["best_precision"] = results.results_dict.get("metrics/precision(B)", 0)
             run.summary["best_recall"] = results.results_dict.get("metrics/recall(B)", 0)
             run.summary["best_mAP50"] = results.results_dict.get("metrics/mAP50(B)", 0)
             run.summary["best_mAP50_95"] = results.results_dict.get("metrics/mAP50-95(B)", 0)
-            run.summary["best_fitness"] = results.best_fitness
+            run.summary["best_fitness"] = getattr(results, 'best_fitness', 0)
             
             # Log dataset version and DVC metadata to summary for easy tracking
             run.summary["dataset_version"] = runtime.dataset_version
