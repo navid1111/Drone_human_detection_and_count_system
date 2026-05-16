@@ -1,13 +1,13 @@
-<h1 align="center">Retail Object Detection: FastAPI + Prometheus + Grafana 🎯</h1>
+<h1 align="center">Drone Human Detection & Count: FastAPI + Prometheus + Grafana 🎯</h1>
 
-A production-ready microservice for real-time retail object detection with comprehensive monitoring, metrics collection, and data quality tracking. This system leverages FastAPI for high-performance inference, Prometheus for metrics collection, and Grafana for visualization and alerting.
+A production-ready microservice for real-time drone human detection and counting with comprehensive monitoring, metrics collection, and data quality tracking. This system leverages FastAPI for high-performance inference, Prometheus for metrics collection, and Grafana for visualization and alerting.
 
 ## System Architecture Overview
 
 ### Core Components
 
 1. **FastAPI Application** - High-performance REST API for object detection
-2. **ONNX Model** - Optimized deep learning model for retail product detection
+2. **ONNX Model** - Optimized deep learning model for drone human detection
 3. **MySQL Database** - Persistent storage of predictions and detections
 4. **Prometheus** - Time-series database for metrics collection
 5. **Grafana** - Visualization and monitoring dashboard

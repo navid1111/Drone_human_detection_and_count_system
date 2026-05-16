@@ -1,4 +1,4 @@
-"""FastAPI application for retail object detection."""
+"""FastAPI application for drone human detection."""
 
 import uuid
 from io import BytesIO
@@ -11,11 +11,11 @@ from fastapi.staticfiles import StaticFiles
 from PIL import Image
 from prometheus_fastapi_instrumentator import Instrumentator
 
-from .config import CONF_THRESHOLD, IOU_THRESHOLD, MODEL_PATH, UPLOAD_DIR
-from .database import init_db
-from .db_service import get_prediction, get_predictions, save_prediction
-from .detection import DetectionService
-from .metrics import (
+from config import CONF_THRESHOLD, IOU_THRESHOLD, MODEL_PATH, UPLOAD_DIR
+from database import init_db
+from db_service import get_prediction, get_predictions, save_prediction
+from detection import DetectionService
+from metrics import (
     avg_confidence_gauge,
     confidence_histogram,
     detection_counter,
@@ -24,11 +24,11 @@ from .metrics import (
     low_confidence_counter,
     prediction_counter,
 )
-from .schemas import PredictionOut
-from .utils import draw_boxes, get_class_name
+from schemas import PredictionOut
+from utils import draw_boxes, get_class_name
 
 # Initialize FastAPI app
-app = FastAPI(title="Retail Detection API")
+app = FastAPI(title="Drone Detection API")
 
 # Initialize detection service (global)
 detection_service = DetectionService()
@@ -46,7 +46,7 @@ def startup_event() -> None:
 @app.get("/")
 def home() -> dict:
     """Health check endpoint."""
-    return {"message": "Retail Detection API is running"}
+    return {"message": "Drone Detection API is running"}
 
 
 @app.get("/health")

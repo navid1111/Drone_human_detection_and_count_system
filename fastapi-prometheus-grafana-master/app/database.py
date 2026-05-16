@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy import DateTime, Float, ForeignKey, Integer, String, Text, create_engine, text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, sessionmaker
 
-from .config import DATABASE_URL, DB_WAIT_SECONDS
+from config import DATABASE_URL, DB_WAIT_SECONDS
 from time import sleep
 
 
@@ -24,6 +24,8 @@ class Prediction(Base):
     annotated_image_path: Mapped[str] = mapped_column(String(512))
     model_name: Mapped[str] = mapped_column(String(255))
     inference_ms: Mapped[float] = mapped_column(Float)
+    human_count: Mapped[int] = mapped_column(Integer, default=0)
+    car_count: Mapped[int] = mapped_column(Integer, default=0)
     ground_truth_json: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     detections: Mapped[list["Detection"]] = relationship(

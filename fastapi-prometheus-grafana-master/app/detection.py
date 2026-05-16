@@ -6,8 +6,8 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 
-from .config import CONF_THRESHOLD, INPUT_HW, IOU_THRESHOLD, MODEL_PATH
-from .utils import DetectionResult, postprocess, preprocess
+from config import CONF_THRESHOLD, INPUT_HW, IOU_THRESHOLD, MODEL_PATH
+from utils import DetectionResult, postprocess, preprocess
 
 
 class DetectionService:

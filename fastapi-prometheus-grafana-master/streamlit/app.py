@@ -16,8 +16,8 @@ def fetch_image_bytes(url: str) -> bytes | None:
         return None
     return None
 
-st.set_page_config(page_title="Retail Detection Dashboard", layout="wide")
-st.title("Retail Object Detection")
+st.set_page_config(page_title="Drone Human & Car Detection Dashboard", layout="wide")
+st.title("Drone Human & Car Detection & Count")
 st.caption("Upload an image, run detection, and track model outputs over time.")
 
 with st.sidebar:
@@ -31,7 +31,7 @@ with left:
     uploaded = st.file_uploader("Upload image", type=["jpg", "jpeg", "png"])
     gt_text = st.text_area(
         "Optional ground-truth JSON",
-        placeholder='{"labels": [{"class": "bottle", "bbox": [10, 20, 100, 220]}]}',
+        placeholder='{"labels": [{"class": "human", "bbox": [10, 20, 100, 220]}, {"class": "car", "bbox": [50, 60, 200, 250]}]}',
         height=120,
     )
 

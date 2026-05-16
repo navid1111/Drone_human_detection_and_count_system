@@ -17,6 +17,8 @@ class PredictionOut(BaseModel):
     created_at: str
     model_name: str
     inference_ms: float
+    human_count: int
+    car_count: int
     image_url: str
     annotated_image_url: str
     ground_truth: dict | None

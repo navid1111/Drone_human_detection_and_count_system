@@ -3,7 +3,7 @@
 import numpy as np
 from PIL import Image, ImageDraw
 
-from .config import CONF_THRESHOLD, IOU_THRESHOLD, INPUT_HW
+from config import CONF_THRESHOLD, IOU_THRESHOLD, INPUT_HW
 
 
 class DetectionResult:
@@ -142,4 +142,5 @@ def draw_boxes(img_rgb: np.ndarray, detections: list[DetectionResult]) -> np.nda
 
 def get_class_name(class_id: int) -> str:
     """Get class name from class ID."""
-    return f"class_{class_id}"
+    classes = {0: "human", 1: "car"}
+    return classes.get(class_id, f"class_{class_id}")

@@ -3,9 +3,9 @@
 import json
 from pathlib import Path
 
-from .database import Detection, Prediction, SessionLocal
-from .schemas import DetectionOut, PredictionOut
-from .utils import DetectionResult, get_class_name
+from database import Detection, Prediction, SessionLocal
+from schemas import DetectionOut, PredictionOut
+from utils import DetectionResult, get_class_name
 
 
 def save_prediction(
@@ -19,11 +19,15 @@ def save_prediction(
     """Save prediction and detections to the database."""
     session = SessionLocal()
     try:
+        human_count = sum(1 for det in detections if getattr(det, 'class_id', -1) == 0)
+        car_count = sum(1 for det in detections if getattr(det, 'class_id', -1) == 1)
         prediction = Prediction(
             image_path=image_path,
             annotated_image_path=annotated_image_path,
             model_name=model_name,
             inference_ms=inference_ms,
+            human_count=human_count,
+            car_count=car_count,
             ground_truth_json=ground_truth_json,
         )
         session.add(prediction)
@@ -106,6 +110,8 @@ def _prediction_to_response(pred: Prediction) -> PredictionOut:
         created_at=pred.created_at.isoformat(),
         model_name=pred.model_name,
         inference_ms=pred.inference_ms,
+        human_count=getattr(pred, 'human_count', 0),
+        car_count=getattr(pred, 'car_count', 0),
         image_url=f"/uploads/{Path(pred.image_path).name}",
         annotated_image_url=f"/uploads/{Path(pred.annotated_image_path).name}",
         ground_truth=ground_truth,

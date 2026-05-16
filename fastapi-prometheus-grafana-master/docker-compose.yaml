@@ -37,7 +37,7 @@ services:
       UPLOAD_DIR: /app/uploads
     volumes:
       - ./app/uploads:/app/uploads
-      - ../runs/train/pipeline_run/weights/best.onnx:/models/model.onnx:ro
+      - ./model/best.onnx:/models/model.onnx:ro
     ports:
       - 8000:8000
     networks:

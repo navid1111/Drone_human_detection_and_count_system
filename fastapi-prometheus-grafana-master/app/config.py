@@ -22,7 +22,7 @@ try:
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 except PermissionError:
     # In CI/test environments, fallback to a writable temp location.
-    UPLOAD_DIR = Path(tempfile.gettempdir()) / "retail_detection_uploads"
+    UPLOAD_DIR = Path(tempfile.gettempdir()) / "drone_detection_uploads"
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 # Database setup
