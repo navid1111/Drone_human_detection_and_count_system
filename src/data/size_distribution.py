@@ -25,6 +25,13 @@ def _resolve_base_dir(yaml_dir: str, data: dict) -> str:
         return yaml_dir
     if os.path.isabs(base):
         return base
+    
+    settings = get_settings()
+    project_root = settings.runtime.project_root
+    cand = os.path.normpath(os.path.join(project_root, base))
+    if os.path.exists(cand):
+        return cand
+
     return os.path.normpath(os.path.join(yaml_dir, base))
 
 
@@ -35,6 +42,12 @@ def _resolve_split_path(base_dir: str, yaml_dir: str, split_value: str) -> str:
     candidate = os.path.normpath(os.path.join(base_dir, split_value))
     if os.path.exists(candidate):
         return candidate
+
+    settings = get_settings()
+    project_root = settings.runtime.project_root
+    cand2 = os.path.normpath(os.path.join(project_root, split_value))
+    if os.path.exists(cand2):
+        return cand2
 
     fallback = os.path.normpath(os.path.join(yaml_dir, split_value))
     if os.path.exists(fallback):
@@ -78,6 +91,10 @@ def analyze_size_distribution(data_yaml_path, split="train", save_dir="docs"):
                 per_class[CLASS_NAMES.get(cls, cls)]["large"] += 1
 
     total = sum(size_counts.values())
+    if total == 0:
+        print(f"\n  [!] No valid objects found in labels at:\n      {label_path}")
+        return size_counts, per_class
+
     widths  = np.array(widths)
     heights = np.array(heights)
     areas   = np.array(areas)
