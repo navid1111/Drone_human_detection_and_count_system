@@ -11,7 +11,7 @@ save: true
 save_period: -1
 cache: false
 device: '0'
-workers: 2
+workers: 0
 project: D:\game\ants\Drone_human_detection_and_count_system\runs\train
 name: pipeline_run
 exist_ok: true

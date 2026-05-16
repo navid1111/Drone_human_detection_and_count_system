@@ -133,6 +133,19 @@ def draw_boxes(img_rgb: np.ndarray, detections: list[DetectionResult]) -> np.nda
     """Draw bounding boxes on the image."""
     img = Image.fromarray(img_rgb)
     draw = ImageDraw.Draw(img)
+
+    # Calculate counts
+    human_count = sum(1 for det in detections if getattr(det, 'class_id', -1) == 0)
+    car_count = sum(1 for det in detections if getattr(det, 'class_id', -1) == 1)
+
+    # Draw counts text box
+    count_text = f"Humans: {human_count} | Cars: {car_count}"
+    
+    # We create a simple black background box for the text to make it readable
+    text_bbox = draw.textbbox((10, 10), count_text) if hasattr(draw, "textbbox") else (10, 10, 150, 25)
+    draw.rectangle([text_bbox[0] - 5, text_bbox[1] - 5, text_bbox[2] + 5, text_bbox[3] + 5], fill="black")
+    draw.text((10, 10), count_text, fill="white")
+
     for det in detections:
         x1, y1, x2, y2 = det.box_xyxy
         draw.rectangle([x1, y1, x2, y2], outline=(255, 0, 0), width=2)

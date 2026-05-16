@@ -56,7 +56,7 @@ with left:
                 st.error(f"Prediction failed ({resp.status_code}): {resp.text}")
             else:
                 result = resp.json()
-                st.success(f"Prediction #{result['id']} completed in {result['inference_ms']:.2f} ms")
+                st.success(f"Prediction #{result['id']} completed in {result['inference_ms']:.2f} ms. Found {result.get('human_count', 0)} humans and {result.get('car_count', 0)} cars.")
 
                 annotated_url = f"{api_url}{result['annotated_image_url']}"
                 original_url = f"{api_url}{result['image_url']}"
@@ -96,7 +96,9 @@ with right:
                         "created_at": r["created_at"],
                         "model": r["model_name"],
                         "inference_ms": round(r["inference_ms"], 2),
-                        "detections": len(r["detections"]),
+                        "humans": r.get("human_count", 0),
+                        "cars": r.get("car_count", 0),
+                        "total_dets": len(r["detections"]),
                     }
                     for r in rows
                 ]
