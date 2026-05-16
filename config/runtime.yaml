@@ -23,7 +23,7 @@ runtime:
   batch: 4
   use_wandb: true
   device: "0"
-  workers: 2
+  workers: 0
 
   conf: 0.5
   iou: 0.5
