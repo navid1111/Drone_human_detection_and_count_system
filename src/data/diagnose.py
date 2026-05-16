@@ -13,7 +13,16 @@ def _resolve_base_dir(yaml_dir: str, data: dict) -> str:
         return yaml_dir
     if os.path.isabs(base):
         return base
-    return os.path.normpath(os.path.join(yaml_dir, base))
+
+    candidate1 = os.path.normpath(os.path.join(yaml_dir, base))
+    if os.path.exists(candidate1):
+        return candidate1
+
+    candidate2 = os.path.normpath(os.path.join(get_settings().runtime.project_root, base))
+    if os.path.exists(candidate2):
+        return candidate2
+
+    return candidate1
 
 
 def _resolve_split_path(base_dir: str, yaml_dir: str, split_value: str) -> str:

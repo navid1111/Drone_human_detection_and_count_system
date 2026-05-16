@@ -20,10 +20,10 @@ runtime:
 
   epochs: 100
   imgsz: 640
-  batch: 8
+  batch: 4
   use_wandb: true
   device: "0"
-  workers: 0
+  workers: 2
 
   conf: 0.5
   iou: 0.5

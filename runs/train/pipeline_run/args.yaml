@@ -5,13 +5,13 @@ data: D:\game\ants\Drone_human_detection_and_count_system\config\visdrone_2class
 epochs: 100
 time: null
 patience: 15
-batch: 8
-imgsz: 640
+batch: 4
+imgsz: 960
 save: true
 save_period: -1
 cache: false
 device: '0'
-workers: 0
+workers: 2
 project: D:\game\ants\Drone_human_detection_and_count_system\runs\train
 name: pipeline_run
 exist_ok: true
@@ -80,7 +80,6 @@ warmup_momentum: 0.8
 warmup_bias_lr: 0.1
 box: 7.5
 cls: 1.5
-cls_pw: 0.0
 dfl: 1.5
 pose: 12.0
 kobj: 1.0
