@@ -25,8 +25,8 @@ A production-ready microservice for real-time drone human detection and counting
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-repo/fastapi-retail-detection
-cd fastapi-retail-detection
+git clone https://github.com/your-repo/fastapi-drone-human-car-detection
+cd fastapi-drone-human-car-detection
 ```
 
 Install dependencies:
@@ -198,7 +198,7 @@ Query metrics in Prometheus:
 ### Dashboard Overview
 
 <p align="center">
-  <img src="./dashboard.jpeg" alt="Retail Detection Dashboard" width="100%">
+  <img src="./dashboard.jpeg" alt="Drone Detection Dashboard" width="100%">
 </p>
 
 ### Key Dashboard Panels
@@ -214,11 +214,11 @@ Query metrics in Prometheus:
 
 ### What is Data Drift?
 
-Data drift occurs when the statistical properties of input data change over time, causing model performance degradation. In retail detection:
+Data drift occurs when the statistical properties of input data change over time, causing model performance degradation. In drone human and car detection:
 
-- **Covariate Drift**: New products, packaging changes, shelf layouts
-- **Label Drift**: Distribution of object classes changes
-- **Prior Drift**: Overall frequency of certain products increases/decreases
+- **Covariate Drift**: Different weather conditions, new camera angles, changing terrain
+- **Label Drift**: Distribution of object classes changes (e.g., urban vs rural scenes)
+- **Prior Drift**: Overall frequency of humans and cars increases/decreases
 
 ### How This System Detects Data Drift
 
@@ -228,23 +228,23 @@ ALERT LowConfidenceDetections
   IF rate(ml_low_confidence_detections_total[5m]) > threshold
   
 Detection: When model confidence drops suddenly, it indicates the data may differ from training distribution
-Impact: Product packaging changes or new display formats confuse the model
+Impact: Poor lighting, new drone altitudes, or dense crowds confuse the model
 ```
 
 #### 2. **Detection Distribution Analysis**
 ```
 ml_detections_per_image over time
 ```
-- **Sudden increase**: New products introduced, shelf density changed
-- **Sudden decrease**: Products removed, layout reorganized
-- **Gradual change**: Seasonal variation or merchandising strategy shift
+- **Sudden increase**: Events, traffic jams, high-density areas
+- **Sudden decrease**: Empty streets, restricted areas
+- **Gradual change**: Rush hour patterns or seasonal variation in outdoor activity
 
 #### 3. **Per-Class Confidence Trends**
 ```
 avg(ml_detection_confidence{class_name="class_X"}) over 1h
 ```
-- Identifies which specific product classes are affected
-- Helps identify localized issues (e.g., specific brand packaging change)
+- Identifies which specific classes (humans or cars) are affected
+- Helps identify localized issues (e.g., specific object occlusions)
 
 #### 4. **Inference Latency Changes**
 ```
@@ -257,11 +257,11 @@ rate(ml_inference_duration_ms[5m])
 
 | Scenario | Metric Change | Detection Method |
 |----------|---------------|------------------|
-| New product type | ↑ detections_per_image | Hist spike in detection counts |
-| Packaging redesign | ↓ confidence score | Confidence drops by class |
-| Lighting changes | ↑ inference_time | Latency increase across all classes |
-| Seasonal items | ↑ specific class detections | Class-specific counter surge |
-| Display reorganization | ↓ detection accuracy | Low-confidence alerts spike |
+| High-density event | ↑ detections_per_image | Hist spike in detection counts |
+| Bad weather/fog | ↓ confidence score | Confidence drops by class |
+| Complex urban scene| ↑ inference_time | Latency increase across all classes |
+| Rush hour traffic | ↑ specific class detections | Class-specific (car) counter surge |
+| High altitude flight | ↓ detection accuracy | Low-confidence alerts spike |
 
 ### Setting Up Drift Alerts
 
@@ -292,7 +292,7 @@ Example Prometheus alert rules:
 
 ### Best Practices for Drift Monitoring
 
-1. **Establish Baselines**: Record normal metrics for your retail environment
+1. **Establish Baselines**: Record normal metrics for your operational environments
 2. **Set Meaningful Thresholds**: Calibrate alerts based on business impact
 3. **Monitor by Location**: If you have multiple stores, track per-location metrics
 4. **Correlate Metrics**: Check if multiple indicators change together

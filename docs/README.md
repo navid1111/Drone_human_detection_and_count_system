@@ -1,6 +1,6 @@
 # Project Overview
 
-This is a comprehensive **Retail Object Detection** platform built on:
+This is a comprehensive **Drone Human & Car Detection** platform built on:
 - **YOLO 11** for object detection
 - **DVC** for data versioning
 - **Airflow** for ML pipeline orchestration
@@ -14,7 +14,7 @@ This is a comprehensive **Retail Object Detection** platform built on:
 ```bash
 # Clone and setup
 git clone <repo>
-cd retail-object-detection
+cd drone-human-car-detection
 
 # Create virtual environment
 python -m venv .venv
@@ -113,7 +113,7 @@ runs/
 | Function | Purpose |
 |----------|---------|
 | `check_gpu_availability()` | Check CUDA/GPU status |
-| `run_from_model()` | Inference + share-of-shelf analytics |
+| `run_from_model()` | Inference + density analytics |
 
 ### `src.pipeline.dags` - Orchestration
 | DAG | Purpose |

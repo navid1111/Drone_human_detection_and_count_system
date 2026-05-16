@@ -12,3 +12,5 @@ onnxruntime
 opencv-python-headless
 pytest
 httpx
+sahi
+ultralytics

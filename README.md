@@ -1,7 +1,7 @@
-# Retail Object Detection MLOps Assignment
+# Drone Human and Car Detection MLOps
 
 ## Overview
-This repository shows an end-to-end retail object detection workflow with an emphasis on reproducibility, deployment readiness, and observability.
+This repository shows an end-to-end drone human and car detection workflow with an emphasis on reproducibility, deployment readiness, and observability.
 
 The core focus is on what was implemented and validated:
 - DVC for data and artifact versioning
@@ -114,7 +114,7 @@ docker-compose down
 ```
 
 ## Final Model Snapshot
-- Dataset classes: 76
+- Dataset classes: 2 (human, car)
 - mAP50: 0.919
 - Precision: 0.906
 - Recall: 0.918
@@ -167,7 +167,7 @@ flowchart TD
     E --> F[check_gpu]
     F --> G[train_model]
     G --> H[evaluate_model]
-    H --> I[run_share_of_shelf]
+    H --> I[run_density_analytics]
     I --> J[push_to_registry]
 ```
 

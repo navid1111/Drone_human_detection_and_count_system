@@ -28,6 +28,7 @@ left, right = st.columns([2, 1])
 
 with left:
     st.subheader("Run Detection")
+    use_sahi = st.checkbox("Use SAHI (Sliced Inference)", value=False)
     uploaded = st.file_uploader("Upload image", type=["jpg", "jpeg", "png"])
     gt_text = st.text_area(
         "Optional ground-truth JSON",
@@ -40,7 +41,7 @@ with left:
             st.warning("Please upload an image first.")
         else:
             files = {"image": (uploaded.name, uploaded.getvalue(), uploaded.type or "image/jpeg")}
-            data = {}
+            data = {"use_sahi": "true" if use_sahi else "false"}
             if gt_text.strip():
                 data["ground_truth"] = gt_text.strip()
 

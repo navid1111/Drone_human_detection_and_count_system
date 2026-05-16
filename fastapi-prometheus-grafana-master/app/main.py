@@ -63,6 +63,7 @@ def health() -> dict:
 async def predict(
     image: UploadFile = File(...),
     ground_truth: str | None = Form(None),
+    use_sahi: bool = Form(False),
 ) -> PredictionOut:
     """
     Run inference on an uploaded image.
@@ -70,6 +71,7 @@ async def predict(
     Args:
         image: Image file to analyze
         ground_truth: Optional ground truth JSON string
+        use_sahi: Whether to use SAHI for inference
         
     Returns:
         PredictionOut with detections and metadata
@@ -95,6 +97,7 @@ async def predict(
     # Run inference
     detections, inference_ms = detection_service.infer(
         image_np,
+        use_sahi=use_sahi,
         conf_threshold=CONF_THRESHOLD,
         iou_threshold=IOU_THRESHOLD,
     )
